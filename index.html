@@ -2,170 +2,161 @@
 <html lang="zh-CN">
 <head>
 <meta charset="UTF-8">
+<meta name="referrer" content="no-referrer">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>红颜 | Creative Portfolio</title>
+<title>红颜 ✦ 网络公主</title>
 <link rel="stylesheet" href="style.css">
-<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;500;700;900&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
-<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<link href="https://fonts.googleapis.com/css2?family=ZCOOL+KuaiLe&family=Noto+Sans+SC:wght@300;400;500;700&display=swap" rel="stylesheet">
 </head>
 <body>
 
+<!-- 背景图层：鼠标揭示效果 -->
+<div class="bg-layer bg-base" id="bgBase"></div>
+<div class="bg-layer bg-reveal" id="bgReveal"></div>
+<div class="bg-spotlight" id="spotlight"></div>
+
 <!-- 自定义光标 -->
-<div class="cursor" id="cursor"></div>
-<div class="cursor-dot" id="cursorDot"></div>
-
-<!-- 滚动进度条 -->
-<div class="scroll-bar" id="scrollBar"></div>
-
-<!-- WebGL Canvas -->
-<canvas id="heroCanvas"></canvas>
+<div class="cursor-star" id="cursorStar">✦</div>
 
 <!-- 主内容 -->
-<main class="smooth-wrapper" id="smoothWrapper">
+<main class="main-content">
 
   <!-- 导航 -->
   <header class="header">
     <a href="#" class="logo">
-      <span class="logo-star">✦</span>
-      <span>红颜</span>
+      <span class="logo-icon">🌸</span>
+      <span class="logo-text">红颜</span>
     </a>
     <nav class="nav">
-      <a href="#works" class="nav-link" data-text="WORKS">作品</a>
-      <a href="#bilibili" class="nav-link" data-text="BILIBILI">B站</a>
-      <a href="#about" class="nav-link" data-text="ABOUT">关于</a>
+      <a href="#works" class="nav-link">作品</a>
+      <a href="#bilibili" class="nav-link">B站</a>
+      <a href="#about" class="nav-link">关于</a>
     </nav>
   </header>
 
   <!-- Hero -->
   <section class="hero" id="hero">
     <div class="hero-inner">
-      <div class="hero-label">PORTFOLIO 2026</div>
+      <p class="hero-greeting">⋆｡°✩ 欢迎来到我的小站 ✩°｡⋆</p>
       <h1 class="hero-title">
-        <span class="title-line tl-1">CREATIVE</span>
-        <span class="title-line tl-2">
-          <span class="tl-outline">DIGITAL</span>
-        </span>
-        <span class="title-line tl-3">EXPERIENCE</span>
+        <span class="title-main">红颜</span>
+        <span class="title-sub">网络公主 · 皇室战争</span>
       </h1>
-      <p class="hero-desc">皇室战争魔改版 · 游戏内容创作 · B站 UP主</p>
-      <div class="hero-scroll">
-        <span>SCROLL</span>
-        <div class="scroll-line"></div>
+      <p class="hero-desc">🎮 皇室战争魔改版创作者 · B站UP主 · 伊蕾娜单推人</p>
+      <div class="hero-buttons">
+        <a href="https://space.bilibili.com/2126202578" target="_blank" class="btn btn-bili">
+          <span class="btn-bili-icon">📺</span> B站主页
+        </a>
+        <a href="#works" class="btn btn-pink">✨ 我的作品</a>
       </div>
+    </div>
+    <div class="hero-floating">
+      <span class="float-emoji e1">🌸</span>
+      <span class="float-emoji e2">⭐</span>
+      <span class="float-emoji e3">🎀</span>
+      <span class="float-emoji e4">💫</span>
+      <span class="float-emoji e5">🪄</span>
     </div>
   </section>
 
   <!-- 作品展示 -->
   <section class="works" id="works">
-    <div class="section-label">FEATURED</div>
-    <h2 class="section-heading">精选作品</h2>
+    <div class="section-head">
+      <span class="section-icon">🎬</span>
+      <h2 class="section-title">最新作品</h2>
+      <p class="section-sub">点击图片跳转 B站观看完整视频 ✧</p>
+    </div>
 
-    <!-- Project 1 -->
-    <div class="project" data-parallax="0.3">
-      <a href="https://www.bilibili.com/video/BV167AszZEze" target="_blank" class="project-link" data-magnetic>
-        <div class="project-image-wrap">
-          <div class="project-image" style="background-image: url(https://i2.hdslb.com/bfs/archive/8aeb2d38b732467ee0ccada96e98a9ec1d6988db.jpg); background-size: cover; background-position: center;">
-            <div class="project-image-overlay"></div>
-            <div class="project-image-inner">
-              <span class="project-tag">▶ 点击观看</span>
-            </div>
-          </div>
+    <div class="works-grid">
+
+      <!-- Video 1 -->
+      <a href="https://www.bilibili.com/video/BV167AszZEze" target="_blank" class="work-card">
+        <div class="work-cover">
+          <img src="https://i2.hdslb.com/bfs/archive/8aeb2d38b732467ee0ccada96e98a9ec1d6988db.jpg" alt="无限技能的英雄们谁最强？" onerror="this.style.display='none';this.parentElement.classList.add('fallback');">
+          <div class="work-play">▶</div>
         </div>
-        <div class="project-info">
-          <span class="project-num">01</span>
-          <h3 class="project-title">无限技能的英雄们谁最强？</h3>
-          <div class="project-meta">
-            <span>38.7万 播放</span>
-            <span class="meta-dot">·</span>
-            <span>1.8万 赞</span>
+        <div class="work-info">
+          <h3>无限技能的英雄们谁最强？</h3>
+          <div class="work-stats">
+            <span>👁 38.7万</span>
+            <span>❤ 1.8万</span>
           </div>
         </div>
       </a>
-    </div>
 
-    <!-- Project 2 -->
-    <div class="project project-reverse" data-parallax="0.25">
-      <a href="https://www.bilibili.com/video/BV1vi5k6UEpU" target="_blank" class="project-link" data-magnetic>
-        <div class="project-image-wrap">
-          <div class="project-image" style="background-image: url(https://i1.hdslb.com/bfs/archive/ce820c0adca4f9e6aa9e8de88cca50dd06f45d5c.jpg); background-size: cover; background-position: center;">
-            <div class="project-image-overlay"></div>
-            <div class="project-image-inner">
-              <span class="project-tag">▶ 点击观看</span>
-            </div>
-          </div>
+      <!-- Video 2 -->
+      <a href="https://www.bilibili.com/video/BV1vi5k6UEpU" target="_blank" class="work-card">
+        <div class="work-cover">
+          <img src="https://i1.hdslb.com/bfs/archive/ce820c0adca4f9e6aa9e8de88cca50dd06f45d5c.jpg" alt="篮球能打败哪些无限技能的英雄？" onerror="this.style.display='none';this.parentElement.classList.add('fallback');">
+          <div class="work-play">▶</div>
         </div>
-        <div class="project-info">
-          <span class="project-num">02</span>
-          <h3 class="project-title">篮球能打败哪些无限技能的英雄？</h3>
-          <div class="project-meta">
-            <span>17.2万 播放</span>
-            <span class="meta-dot">·</span>
-            <span>6265 赞</span>
+        <div class="work-info">
+          <h3>篮球能打败哪些无限技能的英雄？</h3>
+          <div class="work-stats">
+            <span>👁 17.2万</span>
+            <span>❤ 6265</span>
           </div>
         </div>
       </a>
-    </div>
 
-    <!-- Project 3 -->
-    <div class="project" data-parallax="0.2">
-      <a href="https://www.bilibili.com/video/BV1mnRLBxEeC" target="_blank" class="project-link" data-magnetic>
-        <div class="project-image-wrap">
-          <div class="project-image" style="background-image: url(https://i0.hdslb.com/bfs/archive/f1c230f52bc1d11f573ef9d2b684a8f7288440ca.jpg); background-size: cover; background-position: center;">
-            <div class="project-image-overlay"></div>
-            <div class="project-image-inner">
-              <span class="project-tag">▶ 点击观看</span>
-            </div>
-          </div>
+      <!-- Video 3 -->
+      <a href="https://www.bilibili.com/video/BV1mnRLBxEeC" target="_blank" class="work-card">
+        <div class="work-cover">
+          <img src="https://i0.hdslb.com/bfs/archive/f1c230f52bc1d11f573ef9d2b684a8f7288440ca.jpg" alt="无限技能精英黑暗王子" onerror="this.style.display='none';this.parentElement.classList.add('fallback');">
+          <div class="work-play">▶</div>
         </div>
-        <div class="project-info">
-          <span class="project-num">03</span>
-          <h3 class="project-title">无限技能精英黑暗王子</h3>
-          <div class="project-meta">
-            <span>11.4万 播放</span>
-            <span class="meta-dot">·</span>
-            <span>4573 赞</span>
+        <div class="work-info">
+          <h3>无限技能精英黑暗王子</h3>
+          <div class="work-stats">
+            <span>👁 11.4万</span>
+            <span>❤ 4573</span>
           </div>
         </div>
       </a>
-    </div>
 
+    </div>
   </section>
 
   <!-- B站区域 -->
   <section class="bilibili" id="bilibili">
-    <div class="section-label">BILIBILI</div>
-    <h2 class="section-heading">关注我的B站</h2>
-    <div class="bili-content">
-      <p class="bili-text">
-        不定期更新皇室战争魔改版<br>
-        实机演示、安装教程、搞笑集锦
-      </p>
-      <a href="https://space.bilibili.com/2126202578" target="_blank" class="bili-link" data-magnetic>
-        <span class="bili-arrow">→</span>
-        <span>访问主页</span>
+    <div class="section-head">
+      <span class="section-icon">🎧</span>
+      <h2 class="section-title">关注我</h2>
+      <p class="section-sub">B站：网络公主红颜</p>
+    </div>
+    <div class="bili-box">
+      <div class="bili-avatar-ring">
+        <img src="https://i2.hdslb.com/bfs/face/559f8e6ba1ff33b0ee5a0fb0ae86d1633ab02759.jpg" alt="红颜" onerror="this.src='avatar.jpg';">
+      </div>
+      <p class="bili-desc">不定期更新皇室战争魔改版<br>实机演示 · 安装教程 · 搞笑集锦</p>
+      <a href="https://space.bilibili.com/2126202578" target="_blank" class="btn btn-bili-lg">
+        📺 访问B站空间
       </a>
     </div>
   </section>
 
   <!-- 关于 -->
   <section class="about" id="about">
-    <div class="section-label">ABOUT</div>
-    <h2 class="section-heading">红颜</h2>
-    <div class="about-grid">
-      <div class="about-image">
-        <div class="about-avatar-wrap">
-          <img src="https://i2.hdslb.com/bfs/face/559f8e6ba1ff33b0ee5a0fb0ae86d1633ab02759.jpg" alt="红颜">
-        </div>
+    <div class="section-head">
+      <span class="section-icon">🌸</span>
+      <h2 class="section-title">关于我</h2>
+    </div>
+    <div class="about-card">
+      <div class="about-avatar-wrap">
+        <img src="https://i2.hdslb.com/bfs/face/559f8e6ba1ff33b0ee5a0fb0ae86d1633ab02759.jpg" alt="红颜" onerror="this.src='avatar.jpg';">
       </div>
-      <div class="about-text">
-        <p>
-          皇室战争资深玩家，<br>
-          喜欢捣鼓各种魔改版本。<br>
-          如果有好玩的版本欢迎投稿！
-        </p>
+      <div class="about-body">
+        <h3>红颜 / 网络公主 ✨</h3>
+        <p>皇室战争资深玩家，喜欢捣鼓各种魔改版本。<br>伊蕾娜是我最爱的动漫角色 💜<br>如果有好玩的版本欢迎投稿！</p>
+        <div class="about-tags">
+          <span>🌸 皇室战争</span>
+          <span>🎮 魔改版收集</span>
+          <span>💜 伊蕾娜单推</span>
+          <span>🎀 可爱即是正义</span>
+        </div>
         <div class="about-links">
-          <a href="https://space.bilibili.com/2126202578" target="_blank" class="about-link" data-magnetic>B站主页</a>
-          <a href="https://github.com/nuomihy/nuomihy-cr-mods" target="_blank" class="about-link about-link-gh" data-magnetic>GitHub</a>
+          <a href="https://space.bilibili.com/2126202578" target="_blank" class="about-link bili-link">📺 B站主页</a>
+          <a href="https://github.com/nuomihy/nuomihy-cr-mods" target="_blank" class="about-link gh-link">⭐ GitHub</a>
         </div>
       </div>
     </div>
@@ -173,18 +164,8 @@
 
   <!-- 页脚 -->
   <footer class="footer">
-    <div class="footer-top">
-      <h2 class="footer-title">LET'S<br>CONNECT</h2>
-      <a href="https://space.bilibili.com/2126202578" target="_blank" class="footer-email" data-magnetic>
-        space.bilibili.com/2126202578
-        <span class="footer-arrow">↗</span>
-      </a>
-    </div>
-    <div class="footer-bottom">
-      <span>nuomihy.dpdns.org © 2026</span>
-      <span class="footer-divider">·</span>
-      <span>与 Supercell 无关联</span>
-    </div>
+    <p class="footer-msg">—— 谢谢你来玩呀 ✦ ——</p>
+    <p class="footer-info">nuomihy.dpdns.org © 2026 · 与 Supercell 无关联</p>
   </footer>
 
 </main>

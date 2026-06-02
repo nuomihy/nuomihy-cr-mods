@@ -1,201 +1,120 @@
 /* ==========================================
-   红颜 · Monopo 风格 - 交互引擎
+   红颜 · 可爱公主风 交互
    ========================================== */
 
 (function() {
   'use strict';
 
-  // ── THREE.JS WEBGL 背景 ──────────────────
-  const canvas = document.getElementById('heroCanvas');
-  if (canvas && window.THREE) {
-    const renderer = new THREE.WebGLRenderer({ canvas, antialias: true, alpha: true });
-    renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
-    const scene = new THREE.Scene();
-    const camera = new THREE.PerspectiveCamera(50, 1, 0.1, 100);
-    camera.position.z = 5;
+  // ── 鼠标揭示背景图 ──────────────────────
+  const bgReveal = document.getElementById('bgReveal');
+  const spotlight = document.getElementById('spotlight');
+  const cursorStar = document.getElementById('cursorStar');
+  let mx = 0, my = 0, smx = 0, smy = 0;
 
-    const geo = new THREE.PlaneGeometry(8, 8, 64, 64);
-    const mat = new THREE.ShaderMaterial({
-      uniforms: {
-        uTime: { value: 0 },
-        uColor1: { value: new THREE.Color('#1a1a3e') },
-        uColor2: { value: new THREE.Color('#0a0a1a') },
-        uMouse: { value: new THREE.Vector2(0.5, 0.5) }
-      },
-      vertexShader: `
-        varying vec2 vUv;
-        varying float vElevation;
-        uniform float uTime;
-        uniform vec2 uMouse;
-        void main() {
-          vec4 modelPosition = modelMatrix * vec4(position, 1.0);
-          float dist = distance(modelPosition.xy, vec2(uMouse.x * 4.0 - 2.0, uMouse.y * 4.0 - 2.0));
-          float elevation = sin(modelPosition.x * 3.0 + uTime) * cos(modelPosition.y * 3.0 + uTime * 0.5) * 0.3;
-          elevation += exp(-dist * 2.0) * 0.5;
-          modelPosition.z += elevation;
-          vElevation = elevation;
-          vUv = uv;
-          gl_Position = projectionMatrix * viewMatrix * modelPosition;
-        }
-      `,
-      fragmentShader: `
-        varying vec2 vUv;
-        varying float vElevation;
-        uniform vec3 uColor1;
-        uniform vec3 uColor2;
-        void main() {
-          float mixStrength = (vElevation + 0.5) * 1.5;
-          vec3 color = mix(uColor1, uColor2, mixStrength);
-          float alpha = 0.08 + abs(vElevation) * 0.3;
-          gl_FragColor = vec4(color, alpha);
-        }
-      `,
-      transparent: true,
-      wireframe: true
-    });
+  // 伊蕾娜背景图片数组 (使用 wallhaven 直链)
+  const irenaImages = [
+    'url(https://w.wallhaven.cc/full/57/wallhaven-57dov1.jpg)',
+    'url(https://w.wallhaven.cc/full/kx/wallhaven-kx9mw6.png)',
+    'url(https://w.wallhaven.cc/full/6o/wallhaven-6ovmex.jpg)',
+    'url(https://w.wallhaven.cc/full/l8/wallhaven-l81zk2.jpg)',
+    'url(https://w.wallhaven.cc/full/9d/wallhaven-9djr8w.png)',
+  ];
+  let currentBg = 0;
 
-    const mesh = new THREE.Mesh(geo, mat);
-    mesh.rotation.x = -0.5;
-    scene.add(mesh);
+  // 定期切换揭示图
+  setInterval(() => {
+    currentBg = (currentBg + 1) % irenaImages.length;
+    bgReveal.style.backgroundImage = irenaImages[currentBg];
+  }, 8000);
 
-    function resizeRenderer() {
-      const w = window.innerWidth;
-      const h = window.innerHeight;
-      renderer.setSize(w, h);
-      camera.aspect = w / h;
-      camera.updateProjectionMatrix();
+  function updateSpotlight() {
+    smx += (mx - smx) * 0.08;
+    smy += (my - smy) * 0.08;
+    if (bgReveal) {
+      bgReveal.style.maskImage = `radial-gradient(circle 220px at ${smx}px ${smy}px, black 25%, transparent 65%)`;
+      bgReveal.style.webkitMaskImage = `radial-gradient(circle 220px at ${smx}px ${smy}px, black 25%, transparent 65%)`;
     }
-    resizeRenderer();
-    window.addEventListener('resize', resizeRenderer);
-
-    let mouseX = 0.5, mouseY = 0.5;
-    let targetMouseX = 0.5, targetMouseY = 0.5;
-    window.addEventListener('mousemove', (e) => {
-      targetMouseX = e.clientX / window.innerWidth;
-      targetMouseY = 1 - e.clientY / window.innerHeight;
-    });
-
-    function animateWebGL(time) {
-      mouseX += (targetMouseX - mouseX) * 0.05;
-      mouseY += (targetMouseY - mouseY) * 0.05;
-      mat.uniforms.uTime.value = time * 0.001;
-      mat.uniforms.uMouse.value.set(mouseX, mouseY);
-      renderer.render(scene, camera);
-      requestAnimationFrame(animateWebGL);
+    if (cursorStar) {
+      cursorStar.style.left = mx + 'px';
+      cursorStar.style.top = my + 'px';
     }
-    requestAnimationFrame(animateWebGL);
+    if (spotlight) {
+      spotlight.style.background = `radial-gradient(circle 180px at ${smx}px ${smy}px, rgba(255,245,249,0) 0%, rgba(255,245,249,.35) 75%)`;
+    }
+    requestAnimationFrame(updateSpotlight);
   }
-
-  // ── 自定义光标 ──────────────────────────
-  const cursor = document.getElementById('cursor');
-  const cursorDot = document.getElementById('cursorDot');
-  let cx = 0, cy = 0, tx = 0, ty = 0;
+  requestAnimationFrame(updateSpotlight);
 
   document.addEventListener('mousemove', (e) => {
-    tx = e.clientX;
-    ty = e.clientY;
+    mx = e.clientX;
+    my = e.clientY;
   });
 
-  function updateCursor() {
-    cx += (tx - cx) * 0.15;
-    cy += (ty - cy) * 0.15;
-    if (cursor) { cursor.style.left = cx + 'px'; cursor.style.top = cy + 'px'; }
-    if (cursorDot) { cursorDot.style.left = tx + 'px'; cursorDot.style.top = ty + 'px'; }
-    requestAnimationFrame(updateCursor);
-  }
-  requestAnimationFrame(updateCursor);
-
-  // ── 磁性元素 ────────────────────────────
-  document.querySelectorAll('[data-magnetic]').forEach(el => {
-    el.addEventListener('mouseenter', () => cursor && cursor.classList.add('hover'));
-    el.addEventListener('mouseleave', () => cursor && cursor.classList.remove('hover'));
-
-    el.addEventListener('mousemove', (e) => {
-      const rect = el.getBoundingClientRect();
-      const x = e.clientX - rect.left - rect.width / 2;
-      const y = e.clientY - rect.top - rect.height / 2;
-      el.style.transform = `translate(${x * 0.1}px, ${y * 0.1}px) scale(1.02)`;
-    });
-    el.addEventListener('mouseleave', (e) => {
-      el.style.transform = 'translate(0,0) scale(1)';
-    });
+  // ── 光标悬停放大 ────────────────────────
+  document.querySelectorAll('a, button, .work-card').forEach(el => {
+    el.addEventListener('mouseenter', () => cursorStar && cursorStar.classList.add('hover'));
+    el.addEventListener('mouseleave', () => cursorStar && cursorStar.classList.remove('hover'));
   });
 
-  // ── 滚动进度条 ──────────────────────────
-  const scrollBar = document.getElementById('scrollBar');
-  window.addEventListener('scroll', () => {
-    const h = document.documentElement.scrollHeight - window.innerHeight;
-    const p = h > 0 ? window.scrollY / h : 0;
-    if (scrollBar) scrollBar.style.width = (p * 100) + '%';
-  });
-
-  // ── 滚动揭示动画 ─────────────────────────
-  const revealEls = document.querySelectorAll('.project, .bili-content, .about-grid');
-  const revealObserver = new IntersectionObserver((entries) => {
+  // ── 滚动渐显 ────────────────────────────
+  const animEls = document.querySelectorAll('.work-card, .bili-box, .about-card');
+  animEls.forEach(el => el.classList.add('anim-el'));
+  const obs = new IntersectionObserver((entries) => {
     entries.forEach(entry => {
       if (entry.isIntersecting) {
         entry.target.classList.add('visible');
-        revealObserver.unobserve(entry.target);
+        obs.unobserve(entry.target);
       }
     });
-  }, { threshold: 0.2, rootMargin: '0px 0px -60px 0px' });
+  }, { threshold: 0.15 });
+  animEls.forEach(el => obs.observe(el));
 
-  revealEls.forEach(el => revealObserver.observe(el));
-
-  // ── 视差效果 ────────────────────────────
-  const parallaxEls = document.querySelectorAll('[data-parallax]');
-  let ticking = false;
-
-  window.addEventListener('scroll', () => {
-    if (!ticking) {
-      requestAnimationFrame(() => {
-        parallaxEls.forEach(el => {
-          const speed = parseFloat(el.getAttribute('data-parallax'));
-          const rect = el.getBoundingClientRect();
-          const center = rect.top + rect.height / 2;
-          const viewCenter = window.innerHeight / 2;
-          const offset = (center - viewCenter) * speed * 0.05;
-          const img = el.querySelector('.project-image-wrap');
-          if (img) img.style.transform = `translateY(${offset}px)`;
-        });
-        ticking = false;
-      });
-      ticking = true;
-    }
-  });
-
-  // ── 平滑滚动（锚点） ────────────────────
-  document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-    anchor.addEventListener('click', function(e) {
+  // ── 平滑锚点 ────────────────────────────
+  document.querySelectorAll('a[href^="#"]').forEach(a => {
+    a.addEventListener('click', function(e) {
       e.preventDefault();
-      const target = document.querySelector(this.getAttribute('href'));
-      if (target) {
-        const offset = target.getBoundingClientRect().top + window.scrollY;
-        smoothScrollTo(offset, 1200);
+      const t = document.querySelector(this.getAttribute('href'));
+      if (t) {
+        const to = t.getBoundingClientRect().top + window.scrollY;
+        smoothScroll(to, 1000);
       }
     });
   });
 
-  function smoothScrollTo(to, duration) {
+  function smoothScroll(to, dur) {
     const start = window.scrollY;
     const change = to - start;
     const startTime = performance.now();
-
-    function animateScroll(currentTime) {
-      const elapsed = currentTime - startTime;
-      const progress = Math.min(elapsed / duration, 1);
-      // easeInOutCubic
-      const val = progress < 0.5
-        ? 4 * progress * progress * progress
-        : 1 - Math.pow(-2 * progress + 2, 3) / 2;
-      window.scrollTo(0, start + change * val);
-      if (progress < 1) requestAnimationFrame(animateScroll);
+    function anim(now) {
+      const elapsed = now - startTime;
+      const p = Math.min(elapsed / dur, 1);
+      const v = p < .5 ? 2*p*p : -1+(4-2*p)*p; // easeInOutQuad
+      window.scrollTo(0, start + change * v);
+      if (p < 1) requestAnimationFrame(anim);
     }
-    requestAnimationFrame(animateScroll);
+    requestAnimationFrame(anim);
   }
 
-  console.log('%c✦ 红颜 · Creative Portfolio %c| nuomihy.dpdns.org',
-    'color:#f5c842;font-size:18px;','color:#888;');
-  console.log('%cInspired by Monopo — Godly #334','color:#888;font-style:italic;');
+  // ── 背景图 fallback ─────────────────────
+  // 尝试加载伊蕾娜壁纸，失败则用 picsum
+  const testImg = new Image();
+  testImg.onerror = () => {
+    document.querySelector('.bg-base').style.backgroundImage = 'url(https://picsum.photos/seed/elaina1/1920/1080)';
+    bgReveal.style.backgroundImage = 'url(https://picsum.photos/seed/elaina2/1920/1080)';
+  };
+  testImg.src = 'https://w.wallhaven.cc/full/57/wallhaven-57dov1.jpg';
 
+  // 初始加载一张背景
+  const baseImg = new Image();
+  baseImg.onload = () => {
+    document.querySelector('.bg-base').style.backgroundImage = `url(${baseImg.src})`;
+  };
+  baseImg.onerror = () => {
+    document.querySelector('.bg-base').style.backgroundImage = 'url(https://picsum.photos/seed/elaina1/1920/1080)';
+  };
+  baseImg.src = 'https://w.wallhaven.cc/full/6o/wallhaven-6ovmex.jpg';
+
+  console.log('%c🌸 红颜 · 网络公主 %c| nuomihy.dpdns.org',
+    'color:#f8a5c2;font-size:18px;','color:#8b7a9e;');
+  console.log('%c💜 伊蕾娜单推人', 'color:#c4a1ff;');
 })();
