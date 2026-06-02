@@ -216,13 +216,21 @@ body {
   justify-content: center;
   position: relative;
   overflow: hidden;
-  transition: filter .6s;
+  transition: filter .6s, transform .6s;
 }
-.project-link:hover .project-image { filter: brightness(1.1); }
+.project-image-overlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(10,10,10,.45);
+  z-index: 1;
+  transition: background .5s;
+}
+.project-link:hover .project-image-overlay { background: rgba(10,10,10,.25); }
+.project-link:hover .project-image { filter: brightness(1.05); }
 .project-image-inner {
   text-align: center;
   position: relative;
-  z-index: 1;
+  z-index: 2;
 }
 .project-emoji { font-size: 5rem; display: block; margin-bottom: 12px; }
 .project-tag {
