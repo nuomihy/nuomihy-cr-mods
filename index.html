@@ -3,248 +3,214 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>红颜 | 皇室战争魔改版</title>
+<title>红颜 | Creative Portfolio</title>
 <link rel="stylesheet" href="style.css">
-<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;500;700;900&family=Orbitron:wght@500;700;900&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;500;700;900&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
 </head>
 <body>
 
-<!-- 粒子背景 -->
-<canvas id="particleCanvas"></canvas>
+<!-- 自定义光标 -->
+<div class="cursor" id="cursor"></div>
+<div class="cursor-dot" id="cursorDot"></div>
 
-<!-- 导航栏 -->
-<header class="navbar" id="navbar">
-  <div class="nav-inner">
-    <a href="#home" class="nav-brand">
-      <div class="nav-avatar">
-        <img src="avatar.jpg" alt="红颜">
-      </div>
-      <span class="nav-name">红颜</span>
+<!-- 滚动进度条 -->
+<div class="scroll-bar" id="scrollBar"></div>
+
+<!-- WebGL Canvas -->
+<canvas id="heroCanvas"></canvas>
+
+<!-- 主内容 -->
+<main class="smooth-wrapper" id="smoothWrapper">
+
+  <!-- 导航 -->
+  <header class="header">
+    <a href="#" class="logo">
+      <span class="logo-star">✦</span>
+      <span>红颜</span>
     </a>
-    <nav class="nav-menu" id="navMenu">
-      <a href="#home" class="nav-link active">首页</a>
-      <a href="#mods" class="nav-link">魔改版</a>
-      <a href="#bilibili" class="nav-link">B站</a>
-      <a href="#about" class="nav-link">关于</a>
+    <nav class="nav">
+      <a href="#works" class="nav-link" data-text="WORKS">作品</a>
+      <a href="#bilibili" class="nav-link" data-text="BILIBILI">B站</a>
+      <a href="#about" class="nav-link" data-text="ABOUT">关于</a>
     </nav>
-    <button class="nav-toggle" id="navToggle">
-      <span></span><span></span><span></span>
-    </button>
-  </div>
-</header>
+  </header>
 
-<!-- 主屏幕 -->
-<section class="hero" id="home">
-  <div class="hero-glow hero-glow-1"></div>
-  <div class="hero-glow hero-glow-2"></div>
-  <div class="hero-glow hero-glow-3"></div>
-
-  <div class="hero-content">
-    <div class="hero-tag">
-      <span class="tag-dot"></span> 非官方魔改合集
+  <!-- Hero -->
+  <section class="hero" id="hero">
+    <div class="hero-inner">
+      <div class="hero-label">PORTFOLIO 2026</div>
+      <h1 class="hero-title">
+        <span class="title-line tl-1">CREATIVE</span>
+        <span class="title-line tl-2">
+          <span class="tl-outline">DIGITAL</span>
+        </span>
+        <span class="title-line tl-3">EXPERIENCE</span>
+      </h1>
+      <p class="hero-desc">皇室战争魔改版 · 游戏内容创作 · B站 UP主</p>
+      <div class="hero-scroll">
+        <span>SCROLL</span>
+        <div class="scroll-line"></div>
+      </div>
     </div>
-    <h1 class="hero-title">
-      <span class="title-line">皇室战争</span>
-      <span class="title-line title-highlight">魔改版</span>
-    </h1>
-    <p class="hero-desc">
-      无限宝石 · 全卡满级 · 私服对战 · 变态伤害<br>
-      最好玩的 Clash Royale 魔改版本集合站
-    </p>
-    <div class="hero-actions">
-      <a href="#mods" class="btn btn-gold">
-        <span>🔥 探索魔改版</span>
-        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+  </section>
+
+  <!-- 作品展示 -->
+  <section class="works" id="works">
+    <div class="section-label">FEATURED</div>
+    <h2 class="section-heading">精选作品</h2>
+
+    <!-- Project 1 -->
+    <div class="project" data-parallax="0.3">
+      <a href="https://www.bilibili.com/video/填入BV号1" target="_blank" class="project-link" data-magnetic>
+        <div class="project-image-wrap">
+          <div class="project-image" style="background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);">
+            <div class="project-image-inner">
+              <span class="project-emoji">💎</span>
+              <span class="project-tag">点击观看</span>
+            </div>
+          </div>
+        </div>
+        <div class="project-info">
+          <span class="project-num">01</span>
+          <h3 class="project-title">无限宝石版 · 皇室战争</h3>
+          <div class="project-meta">
+            <span>MOD SHOWCASE</span>
+            <span class="meta-dot">·</span>
+            <span>2026</span>
+          </div>
+        </div>
       </a>
-      <a href="#bilibili" class="btn btn-ghost">
-        <span>📺 B站频道</span>
+    </div>
+
+    <!-- Project 2 -->
+    <div class="project project-reverse" data-parallax="0.25">
+      <a href="https://www.bilibili.com/video/填入BV号2" target="_blank" class="project-link" data-magnetic>
+        <div class="project-image-wrap">
+          <div class="project-image" style="background: linear-gradient(135deg, #0f0c29, #302b63, #24243e);">
+            <div class="project-image-inner">
+              <span class="project-emoji">👑</span>
+              <span class="project-tag">点击观看</span>
+            </div>
+          </div>
+        </div>
+        <div class="project-info">
+          <span class="project-num">02</span>
+          <h3 class="project-title">满级国王塔 · 全卡毕业</h3>
+          <div class="project-meta">
+            <span>MOD SHOWCASE</span>
+            <span class="meta-dot">·</span>
+            <span>2026</span>
+          </div>
+        </div>
       </a>
     </div>
-    <div class="hero-numbers">
-      <div class="num-item">
-        <span class="num-value" data-count="20">0</span>
-        <span class="num-label">魔改版本</span>
-      </div>
-      <div class="num-divider"></div>
-      <div class="num-item">
-        <span class="num-value">∞</span>
-        <span class="num-label">无限资源</span>
-      </div>
-      <div class="num-divider"></div>
-      <div class="num-item">
-        <span class="num-value" data-count="5000">0</span>
-        <span class="num-label">快乐玩家</span>
-      </div>
-    </div>
-  </div>
 
-  <div class="hero-cards">
-    <div class="float-card f1">👑</div>
-    <div class="float-card f2">💎</div>
-    <div class="float-card f3">⚡</div>
-    <div class="float-card f4">🏆</div>
-    <div class="float-card f5">🔥</div>
-  </div>
+    <!-- Project 3 -->
+    <div class="project" data-parallax="0.2">
+      <a href="https://www.bilibili.com/video/填入BV号3" target="_blank" class="project-link" data-magnetic>
+        <div class="project-image-wrap">
+          <div class="project-image" style="background: linear-gradient(135deg, #1a1a2e, #4facfe);">
+            <div class="project-image-inner">
+              <span class="project-emoji">⚡</span>
+              <span class="project-tag">点击观看</span>
+            </div>
+          </div>
+        </div>
+        <div class="project-info">
+          <span class="project-num">03</span>
+          <h3 class="project-title">私服对战版 · 在线PK</h3>
+          <div class="project-meta">
+            <span>GAMEPLAY</span>
+            <span class="meta-dot">·</span>
+            <span>2026</span>
+          </div>
+        </div>
+      </a>
+    </div>
 
-  <div class="scroll-hint">
-    <span>向下探索</span>
-    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 13l5 5 5-5M7 6l5 5 5-5"/></svg>
-  </div>
-</section>
+    <!-- Project 4 -->
+    <div class="project project-reverse" data-parallax="0.3">
+      <a href="https://www.bilibili.com/video/填入BV号4" target="_blank" class="project-link" data-magnetic>
+        <div class="project-image-wrap">
+          <div class="project-image" style="background: linear-gradient(135deg, #ffecd2, #fcb69f);">
+            <div class="project-image-inner">
+              <span class="project-emoji">🔥</span>
+              <span class="project-tag">点击观看</span>
+            </div>
+          </div>
+        </div>
+        <div class="project-info">
+          <span class="project-num">04</span>
+          <h3 class="project-title">变态伤害版 · 极致爽感</h3>
+          <div class="project-meta">
+            <span>MOD SHOWCASE</span>
+            <span class="meta-dot">·</span>
+            <span>2026</span>
+          </div>
+        </div>
+      </a>
+    </div>
 
-<!-- 魔改版列表 -->
-<section class="section mods-section" id="mods">
-  <div class="section-head">
-    <h2 class="section-title">🔥 精选魔改版</h2>
-    <p class="section-sub">收集自社区，仅供娱乐体验 · 请支持正版 Supercell</p>
-  </div>
-  <div class="mods-grid">
-    <div class="mod-card">
-      <div class="mod-card-inner">
-        <div class="mod-glow"></div>
-        <div class="mod-badge free">免费</div>
-        <div class="mod-icon-wrap" style="--mod-1:#667eea;--mod-2:#764ba2">
-          <div class="mod-icon">💎</div>
-        </div>
-        <h3>无限宝石版</h3>
-        <p>无限宝石 + 金币，想买什么买什么，全卡解锁畅玩</p>
-        <div class="mod-tags"><span>无限资源</span><span>全卡牌</span></div>
-        <button class="btn btn-mod-btn">下载 (Android)</button>
-      </div>
-    </div>
-    <div class="mod-card">
-      <div class="mod-card-inner">
-        <div class="mod-glow"></div>
-        <div class="mod-badge hot">热门</div>
-        <div class="mod-icon-wrap" style="--mod-1:#f093fb;--mod-2:#f5576c">
-          <div class="mod-icon">👑</div>
-        </div>
-        <h3>满级国王塔</h3>
-        <p>全卡满级满星 + 满级国王塔，一步到位直接毕业</p>
-        <div class="mod-tags"><span>全满级</span><span>即时毕业</span></div>
-        <button class="btn btn-mod-btn">下载 (Android)</button>
-      </div>
-    </div>
-    <div class="mod-card">
-      <div class="mod-card-inner">
-        <div class="mod-glow"></div>
-        <div class="mod-badge new">新版</div>
-        <div class="mod-icon-wrap" style="--mod-1:#4facfe;--mod-2:#00f2fe">
-          <div class="mod-icon">⚡</div>
-        </div>
-        <h3>私服对战版</h3>
-        <p>专属私服支持在线对战，自由自定义卡牌属性</p>
-        <div class="mod-tags"><span>在线对战</span><span>自定义</span></div>
-        <button class="btn btn-mod-btn">下载 (Android)</button>
-      </div>
-    </div>
-    <div class="mod-card">
-      <div class="mod-card-inner">
-        <div class="mod-glow"></div>
-        <div class="mod-badge free">免费</div>
-        <div class="mod-icon-wrap" style="--mod-1:#a18cd1;--mod-2:#fbc2eb">
-          <div class="mod-icon">🎮</div>
-        </div>
-        <h3>经典回忆版</h3>
-        <p>2016 经典版本怀旧体验，老玩家必备回忆杀</p>
-        <div class="mod-tags"><span>经典版本</span><span>怀旧</span></div>
-        <button class="btn btn-mod-btn">下载 (Android)</button>
-      </div>
-    </div>
-    <div class="mod-card">
-      <div class="mod-card-inner">
-        <div class="mod-glow"></div>
-        <div class="mod-badge free">免费</div>
-        <div class="mod-icon-wrap" style="--mod-1:#ffecd2;--mod-2:#fcb69f">
-          <div class="mod-icon">🔥</div>
-        </div>
-        <h3>变态伤害版</h3>
-        <p>全卡伤害 x10，一箭一个塔，体验极致爽感</p>
-        <div class="mod-tags"><span>变态属性</span><span>高伤害</span></div>
-        <button class="btn btn-mod-btn">下载 (Android)</button>
-      </div>
-    </div>
-    <div class="mod-card">
-      <div class="mod-card-inner">
-        <div class="mod-glow"></div>
-        <div class="mod-badge new">新版</div>
-        <div class="mod-icon-wrap" style="--mod-1:#89f7fe;--mod-2:#66a6ff">
-          <div class="mod-icon">🐉</div>
-        </div>
-        <h3>无限圣水版</h3>
-        <p>圣水无限 + 出兵无冷却，疯狂堆兵横扫全场</p>
-        <div class="mod-tags"><span>无限圣水</span><span>无冷却</span></div>
-        <button class="btn btn-mod-btn">下载 (Android)</button>
-      </div>
-    </div>
-  </div>
-</section>
+  </section>
 
-<!-- B站 -->
-<section class="section bili-section" id="bilibili">
-  <div class="section-head">
-    <h2 class="section-title">📺 B站主页</h2>
-    <p class="section-sub">实战演示 · 安装教程 · 皇室战争精彩内容</p>
-  </div>
-  <div class="bili-block">
-    <div class="bili-card">
-      <div class="bili-left">
-        <div class="bili-avatar-ring">
+  <!-- B站区域 -->
+  <section class="bilibili" id="bilibili">
+    <div class="section-label">BILIBILI</div>
+    <h2 class="section-heading">关注我的B站</h2>
+    <div class="bili-content">
+      <p class="bili-text">
+        不定期更新皇室战争魔改版<br>
+        实机演示、安装教程、搞笑集锦
+      </p>
+      <a href="https://space.bilibili.com/2126202578" target="_blank" class="bili-link" data-magnetic>
+        <span class="bili-arrow">→</span>
+        <span>访问主页</span>
+      </a>
+    </div>
+  </section>
+
+  <!-- 关于 -->
+  <section class="about" id="about">
+    <div class="section-label">ABOUT</div>
+    <h2 class="section-heading">红颜</h2>
+    <div class="about-grid">
+      <div class="about-image">
+        <div class="about-avatar-wrap">
           <img src="avatar.jpg" alt="红颜">
         </div>
-        <h3>红颜</h3>
-        <span class="bili-badge">B站 UP主</span>
       </div>
-      <div class="bili-right">
-        <p>不定期更新皇室战争魔改版实机演示、安装教程、以及有趣的游戏视频。关注不迷路！</p>
-        <div class="bili-icons">
-          <div class="bili-feat"><span>📹</span>视频更新中</div>
-          <div class="bili-feat"><span>🎮</span>皇室战争玩家</div>
-          <div class="bili-feat"><span>🔔</span>关注不迷路</div>
+      <div class="about-text">
+        <p>
+          皇室战争资深玩家，<br>
+          喜欢捣鼓各种魔改版本。<br>
+          如果有好玩的版本欢迎投稿！
+        </p>
+        <div class="about-links">
+          <a href="https://space.bilibili.com/2126202578" target="_blank" class="about-link" data-magnetic>B站主页</a>
+          <a href="https://github.com/nuomihy/nuomihy-cr-mods" target="_blank" class="about-link about-link-gh" data-magnetic>GitHub</a>
         </div>
-        <a href="https://space.bilibili.com/2126202578" target="_blank" rel="noopener" class="btn btn-bili">
-          <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><path d="M17.813 4.653h.854c1.51.054 2.769.578 3.773 1.574 1.004.995 1.524 2.249 1.56 3.76v7.36c-.036 1.51-.556 2.769-1.56 3.773s-2.262 1.524-3.773 1.56H5.333c-1.51-.036-2.769-.556-3.773-1.56S.036 18.858 0 17.347v-7.36c.036-1.511.556-2.765 1.56-3.76 1.004-.996 2.262-1.52 3.773-1.574h.774l-1.174-1.12a1.234 1.234 0 0 1-.373-.906c0-.356.124-.658.373-.907l.027-.027c.267-.249.573-.373.92-.373.347 0 .653.124.92.373L9.653 4.44c.071.071.134.142.187.213h4.267a.836.836 0 0 1 .16-.213l2.853-2.747c.267-.249.573-.373.92-.373.347 0 .662.151.929.4.267.249.391.551.391.907 0 .355-.124.657-.373.906zM5.333 7.24c-.746.018-1.373.276-1.88.773-.506.498-.769 1.13-.786 1.894v7.52c.017.764.28 1.395.786 1.893.507.498 1.134.756 1.88.773h13.334c.746-.017 1.373-.275 1.88-.773.506-.498.769-1.129.786-1.893v-7.52c-.017-.765-.28-1.396-.786-1.894-.507-.497-1.134-.755-1.88-.773zM8 11.107c.373 0 .684.124.933.373.25.249.383.569.4.96v1.173c-.017.391-.15.711-.4.96-.249.25-.56.374-.933.374s-.684-.125-.933-.374c-.25-.249-.383-.569-.4-.96V12.44c0-.373.129-.689.386-.947.258-.257.574-.386.947-.386zm8 0c.373 0 .684.124.933.373.25.249.383.569.4.96v1.173c-.017.391-.15.711-.4.96-.249.25-.56.374-.933.374s-.684-.125-.933-.374c-.25-.249-.383-.569-.4-.96V12.44c.017-.391.15-.711.4-.96.249-.249.56-.373.933-.373z"/></svg>
-          访问我的B站空间
-        </a>
       </div>
     </div>
-  </div>
-</section>
+  </section>
 
-<!-- 关于 -->
-<section class="section about-section" id="about">
-  <div class="section-head">
-    <h2 class="section-title">⚡ 关于</h2>
-    <p class="section-sub">这里是我自己的一些介绍</p>
-  </div>
-  <div class="about-card">
-    <div class="about-inner">
-      <div class="about-avatar">
-        <img src="avatar.jpg" alt="红颜">
-      </div>
-      <h3>红颜</h3>
-      <p>皇室战争资深玩家，喜欢捣鼓各种魔改版本。<br>如果有好玩的版本欢迎投稿！</p>
-      <div class="about-links">
-        <a href="https://space.bilibili.com/2126202578" target="_blank" rel="noopener" class="about-link bili-link">
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M17.813 4.653h.854c1.51.054 2.769.578 3.773 1.574 1.004.995 1.524 2.249 1.56 3.76v7.36c-.036 1.51-.556 2.769-1.56 3.773s-2.262 1.524-3.773 1.56H5.333c-1.51-.036-2.769-.556-3.773-1.56S.036 18.858 0 17.347v-7.36c.036-1.511.556-2.765 1.56-3.76 1.004-.996 2.262-1.52 3.773-1.574h.774l-1.174-1.12a1.234 1.234 0 0 1-.373-.906c0-.356.124-.658.373-.907l.027-.027c.267-.249.573-.373.92-.373.347 0 .653.124.92.373L9.653 4.44c.071.071.134.142.187.213h4.267a.836.836 0 0 1 .16-.213l2.853-2.747c.267-.249.573-.373.92-.373.347 0 .662.151.929.4.267.249.391.551.391.907 0 .355-.124.657-.373.906zM5.333 7.24c-.746.018-1.373.276-1.88.773-.506.498-.769 1.13-.786 1.894v7.52c.017.764.28 1.395.786 1.893.507.498 1.134.756 1.88.773h13.334c.746-.017 1.373-.275 1.88-.773.506-.498.769-1.129.786-1.893v-7.52c-.017-.765-.28-1.396-.786-1.894-.507-.497-1.134-.755-1.88-.773zM8 11.107c.373 0 .684.124.933.373.25.249.383.569.4.96v1.173c-.017.391-.15.711-.4.96-.249.25-.56.374-.933.374s-.684-.125-.933-.374c-.25-.249-.383-.569-.4-.96V12.44c0-.373.129-.689.386-.947.258-.257.574-.386.947-.386zm8 0c.373 0 .684.124.933.373.25.249.383.569.4.96v1.173c-.017.391-.15.711-.4.96-.249.25-.56.374-.933.374s-.684-.125-.933-.374c-.25-.249-.383-.569-.4-.96V12.44c.017-.391.15-.711.4-.96.249-.249.56-.373.933-.373z"/></svg>
-          B站主页
-        </a>
-        <a href="https://github.com/nuomihy/nuomihy-cr-mods" target="_blank" rel="noopener" class="about-link gh-link">
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0 0 24 12c0-6.63-5.37-12-12-12z"/></svg>
-          GitHub
-        </a>
-      </div>
+  <!-- 页脚 -->
+  <footer class="footer">
+    <div class="footer-top">
+      <h2 class="footer-title">LET'S<br>CONNECT</h2>
+      <a href="https://space.bilibili.com/2126202578" target="_blank" class="footer-email" data-magnetic>
+        space.bilibili.com/2126202578
+        <span class="footer-arrow">↗</span>
+      </a>
     </div>
-  </div>
-</section>
+    <div class="footer-bottom">
+      <span>nuomihy.dpdns.org © 2026</span>
+      <span class="footer-divider">·</span>
+      <span>与 Supercell 无关联</span>
+    </div>
+  </footer>
 
-<!-- 页脚 -->
-<footer class="footer">
-  <div class="footer-inner">
-    <p>nuomihy.dpdns.org &copy; 2026</p>
-    <p class="footer-sub">Powered by DigitalPlat FreeDomain · 与 Supercell 无任何关联</p>
-  </div>
-</footer>
+</main>
 
 <script src="script.js"></script>
 </body>
