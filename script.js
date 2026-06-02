@@ -48,7 +48,7 @@
   });
 
   // ── 滚动渐显 ────────────────────────────
-  const animEls = document.querySelectorAll('.work-card, .bili-box, .about-card');
+  const animEls = document.querySelectorAll('.work-card, .bili-box, .about-card, .download-card');
   animEls.forEach(el => el.classList.add('anim-el'));
   const obs = new IntersectionObserver((entries) => {
     entries.forEach(entry => {
