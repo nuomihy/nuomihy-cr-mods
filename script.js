@@ -11,35 +11,26 @@
   const cursorStar = document.getElementById('cursorStar');
   let mx = 0, my = 0, smx = 0, smy = 0;
 
-  // 伊蕾娜背景图片数组 (使用 wallhaven 直链)
-  const irenaImages = [
-    'url(https://w.wallhaven.cc/full/57/wallhaven-57dov1.jpg)',
-    'url(https://w.wallhaven.cc/full/kx/wallhaven-kx9mw6.png)',
-    'url(https://w.wallhaven.cc/full/6o/wallhaven-6ovmex.jpg)',
-    'url(https://w.wallhaven.cc/full/l8/wallhaven-l81zk2.jpg)',
-    'url(https://w.wallhaven.cc/full/9d/wallhaven-9djr8w.png)',
-  ];
-  let currentBg = 0;
-
-  // 定期切换揭示图
-  setInterval(() => {
-    currentBg = (currentBg + 1) % irenaImages.length;
-    bgReveal.style.backgroundImage = irenaImages[currentBg];
-  }, 8000);
+  // ── 伊蕾娜背景图（你的本地图片）───────
+  // 底层 bg1.jpg，鼠标揭示层 bg2.jpg
+  document.querySelector('.bg-base').style.backgroundImage = 'url(bg1.jpg)';
+  if (bgReveal) {
+    bgReveal.style.backgroundImage = 'url(bg2.jpg)';
+  }
 
   function updateSpotlight() {
-    smx += (mx - smx) * 0.08;
-    smy += (my - smy) * 0.08;
+    smx += (mx - smx) * 0.06;
+    smy += (my - smy) * 0.06;
     if (bgReveal) {
-      bgReveal.style.maskImage = `radial-gradient(circle 220px at ${smx}px ${smy}px, black 25%, transparent 65%)`;
-      bgReveal.style.webkitMaskImage = `radial-gradient(circle 220px at ${smx}px ${smy}px, black 25%, transparent 65%)`;
+      bgReveal.style.maskImage = `radial-gradient(circle 240px at ${smx}px ${smy}px, black 20%, transparent 60%)`;
+      bgReveal.style.webkitMaskImage = `radial-gradient(circle 240px at ${smx}px ${smy}px, black 20%, transparent 60%)`;
     }
     if (cursorStar) {
       cursorStar.style.left = mx + 'px';
       cursorStar.style.top = my + 'px';
     }
     if (spotlight) {
-      spotlight.style.background = `radial-gradient(circle 180px at ${smx}px ${smy}px, rgba(255,245,249,0) 0%, rgba(255,245,249,.35) 75%)`;
+      spotlight.style.background = `radial-gradient(circle 200px at ${smx}px ${smy}px, rgba(255,245,249,0) 0%, rgba(255,245,249,.3) 70%)`;
     }
     requestAnimationFrame(updateSpotlight);
   }
@@ -88,31 +79,12 @@
     function anim(now) {
       const elapsed = now - startTime;
       const p = Math.min(elapsed / dur, 1);
-      const v = p < .5 ? 2*p*p : -1+(4-2*p)*p; // easeInOutQuad
+      const v = p < .5 ? 2*p*p : -1+(4-2*p)*p;
       window.scrollTo(0, start + change * v);
       if (p < 1) requestAnimationFrame(anim);
     }
     requestAnimationFrame(anim);
   }
-
-  // ── 背景图 fallback ─────────────────────
-  // 尝试加载伊蕾娜壁纸，失败则用 picsum
-  const testImg = new Image();
-  testImg.onerror = () => {
-    document.querySelector('.bg-base').style.backgroundImage = 'url(https://picsum.photos/seed/elaina1/1920/1080)';
-    bgReveal.style.backgroundImage = 'url(https://picsum.photos/seed/elaina2/1920/1080)';
-  };
-  testImg.src = 'https://w.wallhaven.cc/full/57/wallhaven-57dov1.jpg';
-
-  // 初始加载一张背景
-  const baseImg = new Image();
-  baseImg.onload = () => {
-    document.querySelector('.bg-base').style.backgroundImage = `url(${baseImg.src})`;
-  };
-  baseImg.onerror = () => {
-    document.querySelector('.bg-base').style.backgroundImage = 'url(https://picsum.photos/seed/elaina1/1920/1080)';
-  };
-  baseImg.src = 'https://w.wallhaven.cc/full/6o/wallhaven-6ovmex.jpg';
 
   console.log('%c🌸 红颜 · 网络公主 %c| nuomihy.dpdns.org',
     'color:#f8a5c2;font-size:18px;','color:#8b7a9e;');

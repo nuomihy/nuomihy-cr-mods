@@ -36,11 +36,11 @@ body {
   transition: opacity 1.5s;
 }
 .bg-base {
-  background-image: url(https://picsum.photos/seed/elaina1/1920/1080);
-  opacity: .25;
+  background-image: url(bg1.jpg);
+  opacity: .3;
 }
 .bg-reveal {
-  background-image: url(https://picsum.photos/seed/elaina2/1920/1080);
+  background-image: url(bg2.jpg);
   opacity: 0;
   mask-image: radial-gradient(circle 200px at 50% 50%, black 30%, transparent 70%);
   -webkit-mask-image: radial-gradient(circle 200px at 50% 50%, black 30%, transparent 70%);
