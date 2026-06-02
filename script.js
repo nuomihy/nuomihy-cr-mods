@@ -1,179 +1,175 @@
-// ========================================
-// 皇室战争魔改版 - 交互脚本
-// ========================================
+/* ==========================================
+   红颜 · 皇室战争魔改版 - 交互脚本
+   ========================================== */
 
 document.addEventListener('DOMContentLoaded', () => {
 
-  // ---- 导航栏滚动效果 ----
+  // ---- 粒子系统 ----
+  const canvas = document.getElementById('particleCanvas');
+  const ctx = canvas.getContext('2d');
+  let w, h, particles = [];
+
+  function resize() {
+    w = canvas.width = window.innerWidth;
+    h = canvas.height = window.innerHeight;
+  }
+  resize();
+  window.addEventListener('resize', resize);
+
+  class Particle {
+    constructor() {
+      this.reset();
+    }
+    reset() {
+      this.x = Math.random() * w;
+      this.y = Math.random() * h;
+      this.vx = (Math.random() - 0.5) * 0.4;
+      this.vy = (Math.random() - 0.5) * 0.4;
+      this.size = Math.random() * 2 + 0.5;
+      this.alpha = Math.random() * 0.4 + 0.1;
+      this.color = Math.random() > 0.7
+        ? `rgba(245,200,66,${this.alpha})`
+        : `rgba(168,85,247,${this.alpha})`;
+    }
+    update() {
+      this.x += this.vx;
+      this.y += this.vy;
+      if (this.x < 0 || this.x > w || this.y < 0 || this.y > h) this.reset();
+    }
+    draw() {
+      ctx.beginPath();
+      ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+      ctx.fillStyle = this.color;
+      ctx.fill();
+    }
+  }
+
+  for (let i = 0; i < 80; i++) particles.push(new Particle());
+
+  function animate() {
+    ctx.clearRect(0, 0, w, h);
+    particles.forEach(p => { p.update(); p.draw(); });
+
+    // Draw connections
+    for (let i = 0; i < particles.length; i++) {
+      for (let j = i + 1; j < particles.length; j++) {
+        const dx = particles[i].x - particles[j].x;
+        const dy = particles[i].y - particles[j].y;
+        const dist = Math.sqrt(dx * dx + dy * dy);
+        if (dist < 100) {
+          ctx.beginPath();
+          ctx.moveTo(particles[i].x, particles[i].y);
+          ctx.lineTo(particles[j].x, particles[j].y);
+          ctx.strokeStyle = `rgba(245,200,66,${0.04 * (1 - dist / 100)})`;
+          ctx.lineWidth = 0.5;
+          ctx.stroke();
+        }
+      }
+    }
+    requestAnimationFrame(animate);
+  }
+  animate();
+
+  // ---- 导航栏 ----
   const navbar = document.getElementById('navbar');
-  const menuToggle = document.getElementById('menuToggle');
-  const navLinks = document.querySelector('.nav-links');
+  const navToggle = document.getElementById('navToggle');
+  const navMenu = document.getElementById('navMenu');
+  const navLinks = document.querySelectorAll('.nav-link');
 
   window.addEventListener('scroll', () => {
-    if (window.scrollY > 50) {
-      navbar.classList.add('scrolled');
-    } else {
-      navbar.classList.remove('scrolled');
-    }
+    navbar.classList.toggle('scrolled', window.scrollY > 50);
+    updateActiveNav();
   });
 
-  // ---- 移动端菜单 ----
-  menuToggle.addEventListener('click', () => {
-    navLinks.classList.toggle('active');
+  navToggle.addEventListener('click', () => {
+    navMenu.classList.toggle('open');
+    navToggle.classList.toggle('open');
   });
 
-  // 点击链接关闭菜单
-  navLinks.querySelectorAll('a').forEach(link => {
+  navLinks.forEach(link => {
     link.addEventListener('click', () => {
-      navLinks.classList.remove('active');
+      navMenu.classList.remove('open');
+      navToggle.classList.remove('open');
     });
   });
 
-  // ---- 数字递增动画 ----
-  const animateNumbers = () => {
-    document.querySelectorAll('.stat-number[data-target]').forEach(el => {
-      const target = parseInt(el.getAttribute('data-target'));
-      const duration = 2000;
-      const step = target / (duration / 16);
-      let current = 0;
-
-      const observer = new IntersectionObserver((entries) => {
-        entries.forEach(entry => {
-          if (entry.isIntersecting) {
-            observer.unobserve(el);
-            const timer = setInterval(() => {
-              current += step;
-              if (current >= target) {
-                el.textContent = target;
-                clearInterval(timer);
-              } else {
-                el.textContent = Math.floor(current);
-              }
-            }, 16);
-          }
-        });
-      }, { threshold: 0.5 });
-
-      observer.observe(el);
+  function updateActiveNav() {
+    const sections = document.querySelectorAll('section[id]');
+    let current = '';
+    sections.forEach(sec => {
+      const top = sec.offsetTop - 120;
+      if (window.scrollY >= top) current = sec.getAttribute('id');
     });
-  };
+    navLinks.forEach(link => {
+      link.classList.toggle('active', link.getAttribute('href') === '#' + current);
+    });
+  }
 
-  animateNumbers();
-
-  // ---- 滚动进入动画 ----
-  const animateOnScroll = () => {
-    const elements = document.querySelectorAll('.mod-card, .about-card, .bilibili-card');
-
-    const observer = new IntersectionObserver((entries) => {
-      entries.forEach((entry, index) => {
+  // ---- 数字递增 ----
+  document.querySelectorAll('[data-count]').forEach(el => {
+    const target = parseInt(el.getAttribute('data-count'));
+    const obs = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
         if (entry.isIntersecting) {
-          setTimeout(() => {
-            entry.target.classList.add('animate-in');
-          }, index * 100);
-          observer.unobserve(entry.target);
+          obs.unobserve(el);
+          let curr = 0;
+          const step = target / 60;
+          const timer = setInterval(() => {
+            curr += step;
+            if (curr >= target) { el.textContent = target; clearInterval(timer); }
+            else el.textContent = Math.floor(curr);
+          }, 30);
         }
       });
-    }, { threshold: 0.15 });
+    }, { threshold: 0.5 });
+    obs.observe(el);
+  });
 
-    elements.forEach(el => observer.observe(el));
-  };
+  // ---- 滚动入场动画 ----
+  const animEls = document.querySelectorAll('.mod-card, .bili-card, .about-inner');
+  const animObs = new IntersectionObserver((entries) => {
+    entries.forEach((entry, i) => {
+      if (entry.isIntersecting) {
+        setTimeout(() => entry.target.classList.add('visible'), i * 80);
+        animObs.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.12 });
+  animEls.forEach(el => { el.classList.add('anim-in'); animObs.observe(el); });
 
-  animateOnScroll();
-
-  // ---- 下载按钮点击提示 ----
-  document.querySelectorAll('.btn-mod').forEach(btn => {
+  // ---- 下载按钮 ----
+  document.querySelectorAll('.btn-mod-btn').forEach(btn => {
     btn.addEventListener('click', (e) => {
       e.preventDefault();
-      const card = btn.closest('.mod-card');
-      const name = card.querySelector('h3').textContent;
+      const name = btn.closest('.mod-card-inner').querySelector('h3').textContent;
       showToast(`⚠️ "${name}" 下载链接待更新，请关注B站获取最新下载地址`);
     });
   });
 
-  // ---- Toast 通知 ----
-  function showToast(message) {
-    // 移除旧 toast
+  // ---- Toast ----
+  function showToast(msg) {
     const old = document.querySelector('.toast');
     if (old) old.remove();
-
-    const toast = document.createElement('div');
-    toast.className = 'toast';
-    toast.textContent = message;
-    document.body.appendChild(toast);
-
-    requestAnimationFrame(() => {
-      toast.classList.add('show');
-    });
-
-    setTimeout(() => {
-      toast.classList.remove('show');
-      setTimeout(() => toast.remove(), 300);
-    }, 3500);
+    const t = document.createElement('div');
+    t.className = 'toast';
+    t.textContent = msg;
+    document.body.appendChild(t);
+    requestAnimationFrame(() => t.classList.add('show'));
+    setTimeout(() => { t.classList.remove('show'); setTimeout(() => t.remove(), 300); }, 3500);
   }
 
-  // 动态添加 toast 样式
-  const toastStyle = document.createElement('style');
-  toastStyle.textContent = `
-    .toast {
-      position: fixed;
-      bottom: 24px;
-      left: 50%;
-      transform: translateX(-50%) translateY(100px);
-      background: rgba(30, 30, 50, 0.95);
-      color: var(--text);
-      padding: 14px 28px;
-      border-radius: 50px;
-      font-size: 0.9rem;
-      z-index: 9999;
-      border: 1px solid rgba(240, 192, 64, 0.3);
-      backdrop-filter: blur(10px);
-      opacity: 0;
-      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-      max-width: 90vw;
-      text-align: center;
-    }
-    .toast.show {
-      opacity: 1;
-      transform: translateX(-50%) translateY(0);
-    }
-  `;
-  document.head.appendChild(toastStyle);
+  // ---- 鼠标光晕跟随（hero区） ----
+  const hero = document.querySelector('.hero');
+  if (hero) {
+    hero.addEventListener('mousemove', (e) => {
+      const x = (e.clientX / window.innerWidth - 0.5) * 20;
+      const y = (e.clientY / window.innerHeight - 0.5) * 20;
+      hero.style.setProperty('--mx', x + 'px');
+      hero.style.setProperty('--my', y + 'px');
+    });
+  }
 
-  // ---- 粒子背景效果 ----
-  const createParticles = () => {
-    const hero = document.querySelector('.hero-bg');
-    if (!hero) return;
-
-    for (let i = 0; i < 30; i++) {
-      const particle = document.createElement('div');
-      particle.style.cssText = `
-        position: absolute;
-        width: ${Math.random() * 3 + 1}px;
-        height: ${Math.random() * 3 + 1}px;
-        background: rgba(240, 192, 64, ${Math.random() * 0.4 + 0.1});
-        border-radius: 50%;
-        top: ${Math.random() * 100}%;
-        left: ${Math.random() * 100}%;
-        animation: twinkle ${Math.random() * 3 + 2}s ease-in-out infinite;
-        animation-delay: ${Math.random() * 3}s;
-      `;
-      hero.appendChild(particle);
-    }
-  };
-
-  // 闪烁动画
-  const twinkleStyle = document.createElement('style');
-  twinkleStyle.textContent = `
-    @keyframes twinkle {
-      0%, 100% { opacity: 0.2; transform: scale(1); }
-      50% { opacity: 1; transform: scale(2); }
-    }
-  `;
-  document.head.appendChild(twinkleStyle);
-
-  createParticles();
-
-  console.log('🏰 皇室战争魔改版 | nuomihy.dpdns.org');
-  console.log('📺 B站: 访问上方链接');
-  console.log('⚡ 域名由 DigitalPlat FreeDomain 免费提供');
+  console.log('%c🏰 红颜 · 皇室战争魔改版 %c| nuomihy.dpdns.org',
+    'color:#f5c842;font-size:16px;', 'color:#888;');
+  console.log('%c📺 B站: space.bilibili.com/2126202578', 'color:#fb7299;');
 });
